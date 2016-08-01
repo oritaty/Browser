@@ -1,0 +1,203 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Hangman game</title>
+        <style type="text/css">
+        <!--
+            #header01 {
+                height: 100px;
+                width: 30%;
+                border: 2px;
+                border-top-style: double;
+                border-bottom-style: double;
+                border-right-style: double;
+                border-left-style: double;
+                font-size: 50px;
+                text-align: center;
+                margin-right: auto;
+                margin-left: auto;
+            }
+            #header02 {
+                height: 200px;
+                width: 100%;
+                font-size: x-large;
+                text-align: center;
+                margin-right: auto;
+                margin-left: auto;
+            }
+            #contents {
+                height: 100px;
+                width: 100%;
+                font-size: large;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .contents02 ul {
+                list-style: none;
+                height: 100px;
+                width: 100%;
+                font-size: xx-large;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .contents02 li {
+                display: inline;
+                height: 100px;
+                width: 100%;
+                font-size: xx-large;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #contents03 {
+                height: 100px;
+                width: 100%;
+                font-size: small;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #footer {
+                height: 100px;
+                width: 100%;
+                font-size: large;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .words {
+		        padding: 10px;
+	        }
+            -->
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>
+            //List of words.
+            var list = new Array("computer", "book", "apple", "drone", "eight", "foo", "game", "home", "idea", "june", "knight");
+            
+            //Randomly pic one word from the list above.
+            var word = list[Math.floor(Math.random()*list.length)];
+            
+            //count equals to the number of characters of the word.
+            var count = word.length;
+            
+            var bars = "";
+            
+            //Copy of contents displayed on the bar.
+            var w = "";
+            
+            //Index of character selected by player.
+            var index = 0;
+            
+            //True if word contains user input, false otherwise.
+            var bln = false;
+            
+            //Bars to display game process.
+            for (i = 0; i < word.length; i++) {
+		    bars = bars + "<span class='words' id='" + i + "'>____</span>";
+            } 
+        </script>
+        <script>
+            //.ready function that will be execured as soon as dom is loaded.
+            $(document).ready(function() {
+                $("h1#bars").html(bars);
+                $("h1#counter").html("You have " + count + " trials left.");
+            
+            //define a click function on list items - when user clicks this function get invoked    
+            $('li').click(function(event) {
+                
+                //Get the index of which contains character input by user.
+				var index = $("li").index(this);
+				console.log($(this).html());
+				var guess = $(this).html();
+				
+                //Modify the contents to be displayed on the bars.
+				for (var i=0;i<word.length;i++) {
+					if (word.charAt(i) == guess) {
+						$("#"+i).html(guess);
+                        bln = true;
+					}
+				}
+                
+                //If user input isn't included, update and display the count left.
+                if (bln == false) {
+                    count = count - 1;
+                    if (count <= 0) {
+                        count = 0;
+                    }
+                    $("h1#counter").text("You have " + count + " trials left.");
+                }
+                bln = false;
+                
+                //Zero count means player loses.
+                if (count == 0) {
+                    $("h1#bars").html("You lose.");
+                }
+                //Updates the copy of contents on the bars.
+                for (var j=0;j<word.length;j++) {
+                    w = w + "" + $('#' + j).html();
+                }
+                
+                //If they match, player wins.
+                if (w == word) {
+                    $("h1#bars").html("You win !!");
+                }
+                //Has to be reset every time user clicks.
+                w = "";
+            });
+		    });
+            
+            //TODO Incorporate pictures and a gif indicating the counts left.
+            //TODO Make the important messages colorful.
+            //TODO Create a function indicating a hint or a genre the word be classified.
+        </script>
+    </head>
+    <body>
+        <div id="header01">Hangman Game</div>
+        <div id="header02">
+            <br>Guess the word within the number of characters in the words<br>
+            Click on each words to guess the word<br><br>
+        </div>
+        <div id="contents"><h1 id="bars"></h1></div>
+        <div class="contents02">
+            <ul>
+                <li>a</li>
+                <li>b</li>
+                <li>c</li>
+                <li>d</li>
+                <li>e</li>
+                <li>f</li>
+                <li>g</li>
+                <li>h</li>
+                <li>i</li>
+                <li>j</li>
+                <li>k</li>
+                <li>l</li>
+                <li>m</li>
+                <li>n</li>
+                <li>o</li>
+                <li>p</li>
+                <li>q</li>
+                <li>r</li>
+                <li>s</li>
+                <li>t</li>
+                <li>u</li>
+                <li>v</li>
+                <li>w</li>
+                <li>x</li>
+                <li>y</li>
+                <li>z</li>
+            </ul>
+        </div>
+        <div id="contents03">
+            <h1 id="counter"></h1>
+        </div>
+        <div id="footer">
+            Written by Yusuke Oritate<br>
+            ~ Jan 14, 2016 ~<br>
+        </div>
+    </body>
+</html>
