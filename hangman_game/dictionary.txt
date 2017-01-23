@@ -1,0 +1,22 @@
+apple
+banana
+cucumber
+donut
+edamame
+fruit
+grape
+huckleberry
+ice cream
+juice
+kiwi
+leek
+mango
+nectarine
+orange
+papaya
+rasberry
+strawberry
+tomato
+watermelon
+yams
+zucchini
